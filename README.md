@@ -2,7 +2,7 @@
 
 SmartGate je moderan IoT sistem za kontrolu pristupa zgradama koji omogućava da stanari na daljinu vide i odobre ulazak posetiocima putem mobilne aplikacije.
 
-🚀 Opis projekta
+ ## 🚀 Opis projekta
 
 Ovaj sistem predstavlja pametni interfon koji koristi Raspberry Pi kao centralnu jedinicu za obradu podataka. Umesto klasičnih interfona, SmartGate omogućava:
 
@@ -15,7 +15,7 @@ Cilj je da se omogući sigurniji, moderniji i praktičniji način kontrole prist
 
 ---
 
-⚙️ Kako sistem funkcioniše
+## ⚙️ Kako sistem funkcioniše
 
 1. Posetilac pritisne dugme za određeni stan
 2. Signal se šalje Raspberry Pi uređaju
@@ -31,7 +31,7 @@ Cilj je da se omogući sigurniji, moderniji i praktičniji način kontrole prist
 
 ---
 
-🧩 Arhitektura sistema
+## 🧩 Arhitektura sistema
 
 Sistem se sastoji od više komponenti:
 
@@ -60,7 +60,7 @@ Sistem se sastoji od više komponenti:
 
 ---
 
-🛠️ Tehnologije (planirane)
+## 🛠️ Tehnologije (planirane)
 
 - Backend: Spring Boot / Flask
 - Database: MySQL / PostgreSQL
@@ -71,7 +71,7 @@ Sistem se sastoji od više komponenti:
 
 ---
 
-🎯 Cilj projekta
+## 🎯 Cilj projekta
 
 - Poboljšanje bezbednosti stambenih objekata
 - Modernizacija klasičnih interfona
@@ -80,7 +80,7 @@ Sistem se sastoji od više komponenti:
 
 ---
 
-🔒 Potencijalna proširenja
+## 🔒 Potencijalna proširenja
 
 - Face recognition (AI)
 - Istorija posetilaca
@@ -90,18 +90,18 @@ Sistem se sastoji od više komponenti:
 
 ---
 
-👨‍💻 Tim
+## 👨‍💻 Tim
 
 Projekat razvija tim studenata i softverskih inženjera sa ciljem izgradnje realnog IoT proizvoda.
 
 ---
 
-📌 Status
+## 📌 Status
 
 🚧 Projekat je u fazi planiranja i razvoja arhitekture.
 
 ---
 
-📄 Licenca
+## 📄 Licenca
 
 MIT License
