@@ -1,4 +1,4 @@
-🏢 SmartGate – IoT Smart Intercom System
+# 🏢 SmartGate – IoT Smart Intercom System
 
 SmartGate je moderan IoT sistem za kontrolu pristupa zgradama koji omogućava da stanari na daljinu vide i odobre ulazak posetiocima putem mobilne aplikacije.
 
