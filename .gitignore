@@ -1,0 +1,25 @@
+# Slike i fajlovi koje kamera generise
+
+*.jpg
+
+*.png
+
+# Python kompajlirani fajlovi
+
+__pycache__/
+
+*.pyc
+
+# Sistemski fajlovi 
+
+.DS_Store
+
+.venv/
+
+.env
+
+# Text editori
+
+.vscode/
+
+.idea/
