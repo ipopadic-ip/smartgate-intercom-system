@@ -1,13 +1,10 @@
 package server.model;
 
+
 import java.util.Set;
 
-import org.hibernate.annotations.BatchSize;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,29 +21,19 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = "userRole")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@ToString(exclude = {"userRole", "password"}) 
-@EqualsAndHashCode(onlyExplicitlyIncluded = true) 
-public class User {
-
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
-
-    
-    @Column(nullable = false)
-    private String username;
-
-    @Column(nullable = false)
-    private String password;
-
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.EAGER)
-    @BatchSize(size = 25)
-    private Set<UserRole> userRole;
-
-    @Column(nullable = false)
+	@Column
+	private String role;
+	@OneToMany(mappedBy = "role")
+	private Set<UserRole> userRole;
+	
+	@Column(nullable = false)
     private Boolean active = true;
-    
-    
 }
