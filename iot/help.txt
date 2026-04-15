@@ -1,0 +1,11 @@
+pip3 install -r requirements.txt
+Ako OpenCV pravi problem:
+sudo apt update
+sudo apt install python3-opencv
+
+sudo apt update
+sudo apt install mosquitto mosquitto-clients
+
+sudo systemctl status mosquitto
+
+mosquitto_pub -h localhost -t interfon/kapija/komande -m "OPEN"
