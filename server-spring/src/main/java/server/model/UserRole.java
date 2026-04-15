@@ -31,5 +31,6 @@ public class UserRole {
     @ManyToOne
     private Role role;
     
-    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")    private Boolean active = true;
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE") 
+    private Boolean active = true;
 }
