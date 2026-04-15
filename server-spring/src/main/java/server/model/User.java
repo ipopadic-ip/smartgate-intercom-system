@@ -4,6 +4,8 @@ import java.util.Set;
 
 import org.hibernate.annotations.BatchSize;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,6 +45,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.EAGER)
     @BatchSize(size = 25)
+    @JsonManagedReference
     private Set<UserRole> userRole;
 
     @Column(nullable = false)

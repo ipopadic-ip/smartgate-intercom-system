@@ -2,11 +2,13 @@ package server.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Service;
 
 import server.dto.RoleDTO;
 import server.model.Role;
 import server.repository.RoleRepository;
 
+@Service
 public class RoleService extends BaseService<Role, RoleDTO, Long>{
 
 	 @Autowired

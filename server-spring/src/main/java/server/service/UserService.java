@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import server.dto.UserDTO;
@@ -22,7 +23,9 @@ import server.model.User;
 import server.model.UserRole;
 import server.repository.RoleRepository;
 import server.repository.UserRepository;
+import server.repository.UserRoleRepository;
 
+@Service
 public class UserService extends BaseService<User, UserDTO, Long>{
 
 	@Autowired
@@ -34,6 +37,9 @@ public class UserService extends BaseService<User, UserDTO, Long>{
 
 	@Autowired
     private RoleRepository roleRepository;
+	
+	@Autowired
+	private UserRoleRepository userRoleRepository;
 	
 	
 	@Autowired
@@ -160,7 +166,19 @@ public class UserService extends BaseService<User, UserDTO, Long>{
 	        }
 	    }
 	}
+	@Transactional
+	public UserRoleDTO assignRole(Long userId, Long roleId) {
+	    User user = userRepository.findById(userId).orElseThrow();
+	    Role role = roleRepository.findById(roleId).orElseThrow();
 
+	    UserRole userRole = new UserRole();
+	    userRole.setUser(user);
+	    userRole.setRole(role);
+	    userRole.setActive(true);
+
+	    UserRole saved = userRoleRepository.save(userRole);
+	    return userRoleService.convertToDTO(saved);
+	}
 
 	
 

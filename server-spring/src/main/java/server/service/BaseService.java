@@ -31,7 +31,7 @@ public abstract class BaseService<T, DTO, ID> {
     public List<DTO> findAll() {
         return ((List<T>) getRepository().findAll())
                 .stream()
-                .filter(this::isVidljiv)
+                .filter(this::isActive)
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
@@ -45,7 +45,7 @@ public abstract class BaseService<T, DTO, ID> {
 
     public Optional<DTO> findById(ID id) {
         return getRepository().findById(id)
-                .filter(this::isVidljiv)
+                .filter(this::isActive)
                 .map(this::convertToDTO);
     }
 
@@ -66,7 +66,7 @@ public abstract class BaseService<T, DTO, ID> {
             }
 
             T newEntity = convertToEntity(dto);
-            setVidljiv(newEntity, true);
+            setActive(newEntity, true);
             return convertToDTO(getRepository().save(newEntity));
         } catch (Exception e) {
             throw new RuntimeException("Error in save operation: " + e.getMessage(), e);
@@ -80,14 +80,14 @@ public abstract class BaseService<T, DTO, ID> {
     public void deleteById(ID id) {
         Optional<T> optional = getRepository().findById(id);
         optional.ifPresent(entity -> {
-            setVidljiv(entity, false);
+            setActive(entity, false);
             getRepository().save(entity);
         });
     }
 
-    private boolean isVidljiv(T entity) {
+    private boolean isActive(T entity) {
         try {
-            Field field = entity.getClass().getDeclaredField("vidljiv");
+            Field field = entity.getClass().getDeclaredField("active");
             field.setAccessible(true);
             Boolean vidljiv = (Boolean) field.get(entity);
             return vidljiv == null || vidljiv; 
@@ -97,9 +97,9 @@ public abstract class BaseService<T, DTO, ID> {
     }
 
  
-    private void setVidljiv(T entity, boolean value) {
+    private void setActive(T entity, boolean value) {
         try {
-            Field field = entity.getClass().getDeclaredField("vidljiv");
+            Field field = entity.getClass().getDeclaredField("active");
             field.setAccessible(true);
             field.set(entity, value);
         } catch (Exception e) {

@@ -3,6 +3,7 @@ package server.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Service;
 
 import server.dto.UserRoleDTO;
 import server.model.Role;
@@ -10,6 +11,7 @@ import server.model.User;
 import server.model.UserRole;
 import server.repository.UserRoleRepository;
 
+@Service
 public class UserRoleService extends BaseService<UserRole, UserRoleDTO, Long> {
 
 	  @Autowired

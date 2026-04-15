@@ -1,5 +1,8 @@
 package server.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +21,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = {"user", "role"})
 public class UserRole {
 
     @Id
@@ -26,6 +30,7 @@ public class UserRole {
     private Long id;
 
     @ManyToOne
+    @JsonBackReference
     private User user;
 
     @ManyToOne
