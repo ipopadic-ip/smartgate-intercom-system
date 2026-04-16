@@ -110,6 +110,11 @@ public class UserService extends BaseService<User, UserDTO, Long>{
 	}
 
 
+	@Transactional
+    public User findByUsernameWithPrivileges(String username) {
+        return userRepository.findByUsernameWithUserRole(username);
+    }
+	
 	@Override
 	protected void updateEntityFromDto(UserDTO dto, User entity) {
 	    // Basic scalar updates
