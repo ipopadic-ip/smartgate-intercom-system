@@ -2,7 +2,7 @@ import requests
 from utils.logger import log
 
 def upload_image(image_path):
-    url = "http://192.168.1.100:8080/api/upload"
+    url = "http://192.168.100.109:8080/api/upload"
 
     try:
         with open(image_path, "rb") as f:

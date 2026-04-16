@@ -53,8 +53,14 @@ class IntercomService:
             log(f"Process ring error: {e}")
 
     def handle_mqtt_message(self, client, userdata, msg):
-        message = msg.payload.decode()
-        log(f"Primljena komanda: {message}")
+            try:
+                payload = json.loads(msg.payload.decode())
+                command_type = payload.get("type")
 
-        if message == "OPEN":
-            self.relay.open_gate()
+                log(f"Primljena komanda: {command_type}")
+
+                if command_type == "OPEN":
+                    self.relay.open_gate()
+
+            except Exception as e:
+                log(f"MQTT command error: {e}")
