@@ -1,0 +1,101 @@
+Faza 1: Stanje pripravnosti (Svi su povezani)
+Pre bilo kakve akcije, tvoji sistemi moraju da "razgovaraju" sa posrednicima:
+
+
+Raspberry Pi (Python): Povezuje se na Mosquitto Broker (na port 1883) i "pretplaćuje" se (Subscribe) na temu interfon/kapija/komande. On sada čeka da mu neko kaže "OTVORI".
+
+
+Spring Boot (Java): Takođe se povezuje na isti Broker i "pretplaćuje" se na temu interfon/pozivi. On čeka da mu neko javi da neko zvoni.
+
+
+Front-end (Browser): Čim otvoriš stranicu, on otvara WebSocket vezu ka Spring Boot-u. Linija je otvorena i čeka notifikaciju.
+
+
+Faza 2: Detekcija – Neko je pozvonio
+Neko dolazi ispred zgrade i pritiska dugme za Stan 3.
+
+
+Hardware: Dugme aktivira GPIO pin na Raspberry-ju.
+
+
+Pi (Publish): Python skripta šalje MQTT poruku Brokeru:
+
+
+Topic: interfon/pozivi
+
+
+Payload: {"stan": 3, "timestamp": "12:00"}
+
+
+
+Broker: Prima poruku i odmah je prosleđuje onome ko je sluša – tvom Spring Boot serveru.
+
+
+Faza 3: Obrada i Real-time Notifikacija
+
+
+Spring Boot: Primi poruku sa Brokera. Odmah radi dve stvari:
+
+
+Baza podataka: Upisuje u tabelu logovi da je u 12:00 zvonjeno Stanu 3.
+
+
+WebSocket Push: Spring vidi da je tvoj telefon/laptop povezan preko WebSocketa i odmah mu "gurne" poruku: "Hej, neko ti je na vratima!".
+
+
+
+Front-end: Bez ikakvog osvežavanja stranice, tebi iskače prozor (modal) sa opcijama: "Otvori" ili "Odbij".
+
+
+Faza 4: Reakcija – Otvaranje kapije
+Ti klikneš na dugme "Otvori" u svom browseru.
+
+
+Front-end (HTTP POST): Šalje klasičan REST zahtev ka Springu: POST /api/v1/kapija/otvori.
+
+
+Spring Boot (Publish): Server proveri tvoj token (da li si to stvarno ti) i šalje MQTT poruku nazad na Broker:
+
+
+Topic: interfon/kapija/komande
+
+
+Payload: OPEN
+
+
+
+Broker: Vidi poruku i šalje je onome ko sluša tu temu – tvom Raspberry Pi-u.
+
+
+Pi (Izvršenje): Python primi reč OPEN, aktivira relej na sekundu (vrata "caknu") i kapija je otvorena.
+
+
+
+Uređaji se povezuju i rade Subscribe.
+
+
+Neko pritisne Dugme.
+
+
+Pi šalje (Publish) poruku Brokeru.
+
+
+Broker je prosleđuje Spring Boot-u.
+
+
+Spring Boot je zapisuje u Bazu.
+
+
+Spring Boot je "gura" preko WebSocketa na tvoj Browser.
+
+
+Ti vidiš notifikaciju i klikneš "Otvori" (šalje se HTTP POST).
+
+
+Spring Boot proverava prava i šalje (Publish) poruku Brokeru.
+
+
+Broker je prosleđuje Pi-u.
+
+
+Pi aktivira Relej i kapija se otvara.
