@@ -1,0 +1,20 @@
+<div class="login-page">
+  <div class="login-card">
+    <h1>SmartGate</h1>
+    <p>Prijava korisnika</p>
+
+    <input
+      type="text"
+      placeholder="Korisničko ime"
+      [(ngModel)]="username"
+    />
+
+    <input
+      type="password"
+      placeholder="Lozinka"
+      [(ngModel)]="password"
+    />
+
+    <button (click)="login()">Uloguj se</button>
+  </div>
+</div>

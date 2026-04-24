@@ -1,0 +1,19 @@
+<div class="dashboard-page">
+  <div class="dashboard-card">
+    <h1>SmartGate Intercom</h1>
+    <p class="subtitle">Dolazni poziv sa interfona</p>
+
+    <img [src]="visitorImageUrl" alt="Slika posetioca" class="visitor-image" />
+
+    <div class="info-box">
+      <p><strong>Vreme poziva:</strong> {{ timestamp | date:'dd.MM.yyyy HH:mm:ss' }}</p>
+    </div>
+
+    <div class="actions">
+      <button class="open-btn" (click)="openDoor()">Otvori</button>
+      <button class="reject-btn" (click)="rejectVisitor()">Ne otvaraj</button>
+    </div>
+
+    <p class="message" *ngIf="message">{{ message }}</p>
+  </div>
+</div>
