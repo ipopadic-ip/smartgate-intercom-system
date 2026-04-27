@@ -1,21 +1,21 @@
-# 🏢 SmartGate – IoT Smart Intercom System
+# SmartGate – IoT Smart Intercom System
 
 SmartGate je moderan IoT sistem za kontrolu pristupa zgradama koji omogućava da stanari na daljinu vide i odobre ulazak posetiocima putem mobilne aplikacije.
 
- ## 🚀 Opis projekta
+ ## Opis projekta
 
 Ovaj sistem predstavlja pametni interfon koji koristi Raspberry Pi kao centralnu jedinicu za obradu podataka. Umesto klasičnih interfona, SmartGate omogućava:
 
-- 📷 snimanje slike ili kratkog videa posetilaca
-- 📱 slanje obaveštenja na mobilnu aplikaciju
-- 🔓 daljinsko otključavanje vrata
-- 🏢 podršku za više stanova (multi-apartment system)
+- snimanje slike ili kratkog videa posetilaca
+- slanje obaveštenja na mobilnu aplikaciju
+- daljinsko otključavanje vrata
+- podršku za više stanova (multi-apartment system)
 
 Cilj je da se omogući sigurniji, moderniji i praktičniji način kontrole pristupa zgradama.
 
 ---
 
-## ⚙️ Kako sistem funkcioniše
+## Kako sistem funkcioniše
 
 1. Posetilac pritisne dugme za određeni stan
 2. Signal se šalje Raspberry Pi uređaju
@@ -25,42 +25,42 @@ Cilj je da se omogući sigurniji, moderniji i praktičniji način kontrole prist
 4. Podatak se šalje serveru / API-ju
 5. Korisnik dobija notifikaciju na mobilnoj aplikaciji
 6. Korisnik:
-   - 👁️ pregleda sliku/video
-   - ✅ odobrava ulazak ili ❌ odbija
+   - pregleda sliku/video
+   - odobrava ulazak ili ❌ odbija
 7. U slučaju odobrenja → vrata se otključavaju
 
 ---
 
-## 🧩 Arhitektura sistema
+## Arhitektura sistema
 
 Sistem se sastoji od više komponenti:
 
-- 🖥️ Raspberry Pi (IoT Layer)
+- Raspberry Pi (IoT Layer)
   
   - upravljanje kamerama
   - komunikacija sa serverom
   - obrada zahteva sa tastera
 
-- 🌐 Backend (API)
+- Backend (API)
   
   - obrada zahteva
   - autentikacija korisnika
   - skladištenje podataka (slike/video)
 
-- 📱 Mobilna aplikacija
+- Mobilna aplikacija
   
   - notifikacije u realnom vremenu
   - prikaz posetilaca
   - kontrola pristupa
 
-- 🚪 Door Control System
+- Door Control System
   
   - elektronska brava
   - signal za otključavanje
 
 ---
 
-## 🛠️ Tehnologije (planirane)
+## Tehnologije (planirane)
 
 - Backend: Spring Boot / Flask
 - Database: MySQL / PostgreSQL
@@ -71,7 +71,7 @@ Sistem se sastoji od više komponenti:
 
 ---
 
-## 🎯 Cilj projekta
+## Cilj projekta
 
 - Poboljšanje bezbednosti stambenih objekata
 - Modernizacija klasičnih interfona
@@ -80,7 +80,7 @@ Sistem se sastoji od više komponenti:
 
 ---
 
-## 🔒 Potencijalna proširenja
+## Potencijalna proširenja
 
 - Face recognition (AI)
 - Istorija posetilaca
@@ -90,18 +90,18 @@ Sistem se sastoji od više komponenti:
 
 ---
 
-## 👨‍💻 Tim
+## Tim
 
 Projekat razvija tim studenata i softverskih inženjera sa ciljem izgradnje realnog IoT proizvoda.
 
 ---
 
-## 📌 Status
+## Status
 
-🚧 Projekat je u fazi planiranja i razvoja arhitekture.
+ Projekat je u fazi planiranja i razvoja arhitekture.
 
 ---
 
-## 📄 Licenca
+## Licenca
 
 MIT License
