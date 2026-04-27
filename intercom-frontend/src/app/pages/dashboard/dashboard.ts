@@ -13,9 +13,11 @@ import { IntercomEvent } from '../../models/intercom-event';
 })
 export class DashboardComponent implements OnInit {
   event?: IntercomEvent;
+  stan?: number;
   visitorImageUrl = 'https://via.placeholder.com/500x350.png?text=Nema+slike';
   timestamp = new Date();
   message = '';
+  isProcessing = false;
 
   constructor(
     private intercomService: IntercomService,
@@ -30,17 +32,28 @@ export class DashboardComponent implements OnInit {
         console.log('Dashboard primio event:', event);
         this.event = event;
         this.visitorImageUrl = event.image_url;
-        this.timestamp = new Date(event.timestamp);
+        this.stan = event.stan;
+
+        const now = new Date();
+        const [h, m, s] = event.timestamp.split(':').map(Number);
+        now.setHours(h, m, s, 0);
+        this.timestamp = new Date(now);
+
         this.message = 'Novi posetilac na interfonu.';
+        // if (!this.isProcessing) {
+        //   this.message = 'Novi posetilac na interfonu.';
+        // }
+        
         this.cdr.detectChanges(); // forsira UI refresh
       });
     }
   }
 
   openDoor(): void {
-    this.message = 'Šaljem komandu za otvaranje...';
+    this.isProcessing = true;
+    this.message = 'Kapija uspešno otvorena.';
     this.intercomService.openGate().subscribe({
-      next: () => { this.message = 'Interfon je otvoren.'; },
+      next: () => { this.message = 'Kapija je otvorena.'; },
       error: () => { this.message = 'Greška: backend nije dostupan.'; }
     });
   }

@@ -60,6 +60,10 @@ export class IntercomService {
   }
 
   openGate() {
-    return this.http.post(`${this.apiUrl}/open`, {}, { responseType: 'text' });
+    // return this.http.post(`${this.apiUrl}/open`, {}, { responseType: 'text' });
+    return this.http.post(`${this.apiUrl}/open`, {}, {
+      observe: 'response',
+      responseType: 'text'
+    });
   }
 }

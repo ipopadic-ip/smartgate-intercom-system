@@ -6,6 +6,7 @@
     <img [src]="visitorImageUrl" alt="Slika posetioca" class="visitor-image" />
 
     <div class="info-box">
+      <p><strong>Stan:</strong> {{ stan }}</p>
       <p><strong>Vreme poziva:</strong> {{ timestamp | date:'dd.MM.yyyy HH:mm:ss' }}</p>
     </div>
 
