@@ -136,7 +136,8 @@ iot/
 │   ├── button_handler.py    # Dugmad (GPIO ili konzolni test mode)
 │   └── relay_controller.py  # Upravljanje relejom (gpiozero)
 ├── mqtt/
-│   └── mqtt_client.py       # MQTT klijent (paho-mqtt, MQTTv3.1.1)
+│   ├── mqtt_client.py       # MQTT klijent (paho-mqtt, MQTTv3.1.1)
+│   └── topics.py            # Centralizovane MQTT topic konstante
 ├── services/
 │   ├── intercom_service.py  # Centralna business logika
 │   └── upload_service.py    # HTTP upload slike na backend
