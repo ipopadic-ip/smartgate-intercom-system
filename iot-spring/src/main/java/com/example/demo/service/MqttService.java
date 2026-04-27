@@ -8,15 +8,19 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 @Service
 public class MqttService {
 
     private final MessageChannel mqttOutboundChannel;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final SimpMessagingTemplate messagingTemplate;
 
-    public MqttService(MessageChannel mqttOutboundChannel) {
+    public MqttService(MessageChannel mqttOutboundChannel,
+                       SimpMessagingTemplate messagingTemplate) {
         this.mqttOutboundChannel = mqttOutboundChannel;
+        this.messagingTemplate = messagingTemplate;
     }
 
     public void receive(Object payload) {
@@ -32,6 +36,8 @@ public class MqttService {
             }
 
             IntercomEventDto dto = objectMapper.readValue(stringPayload, IntercomEventDto.class);
+
+            messagingTemplate.convertAndSend("/topic/intercom", dto);
 
             System.out.println("Stan: " + dto.getStan());
             System.out.println("Slika: " + dto.getImage_url());
