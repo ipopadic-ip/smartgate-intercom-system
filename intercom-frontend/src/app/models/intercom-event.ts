@@ -1,5 +1,6 @@
 export interface IntercomEvent {
   id?: number;
-  imageUrl: string;
+  stan?: number;
+  image_url: string;
   timestamp: string;
 }
