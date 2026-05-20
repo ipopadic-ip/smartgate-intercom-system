@@ -1,12 +1,5 @@
 package server.utils;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
@@ -14,6 +7,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.crypto.SecretKey;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 
 @Component
 public class TokenUtils {
@@ -60,13 +61,13 @@ public class TokenUtils {
         return c == null ? null : c.getSubject();
     }
 
-    public String generateToken(UserDetails userDetails) {
-        Map<String, Object> payload = new HashMap<>();
+    public String generateToken(UserDetails userDetails, Map<String, Object> extraClaims) {
+        Map<String, Object> payload = new HashMap<>(extraClaims);
         payload.put("authorities", userDetails.getAuthorities());
 
         Date now = new Date();
         Date exp = new Date(now.getTime() + expirationMs);
-
+        
         return Jwts.builder()
                 .claims(payload)
                 .subject(userDetails.getUsername())

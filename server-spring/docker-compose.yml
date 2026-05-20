@@ -1,21 +1,29 @@
-version: '3.8'
+version: "3.9"
+
 services:
   db:
     image: mysql:8.0
     container_name: mysql_db
+    restart: always
     ports:
       - "3306:3306"
     environment:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
       retries: 10
+      interval: 10s
 
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: spring_app
+    restart: always
     ports:
       - "8080:8080"
     depends_on:
@@ -25,5 +33,14 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${DB_NAME}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+
       JWT_SECRET: ${JWT_SECRET}
-      jwt.secret: ${JWT_SECRET}
+      JWT_EXPIRATION_MS: 3600000
+
+      MQTT_BROKER: tcp://192.168.8.52:1883
+      MQTT_CLIENT_ID: spring-backend
+      MQTT_TOPIC_EVENTS: interfon/pozivi
+      MQTT_TOPIC_COMMANDS: interfon/kapija/komande
+
+volumes:
+  mysql_data:

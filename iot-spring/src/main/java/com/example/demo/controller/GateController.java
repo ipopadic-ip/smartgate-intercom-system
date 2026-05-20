@@ -17,8 +17,13 @@ public class GateController {
     }
 
     @PostMapping("/open")
-    public ResponseEntity<String> openGate() {
-        mqttService.sendOpenCommand();
-        return ResponseEntity.ok("Kapija komanda poslata");
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<String> openGate(Authentication auth) {
+
+        String username = auth.getName();
+
+        mqttService.sendOpenCommand(username);
+
+        return ResponseEntity.ok("Kapija otvorena od: " + username);
     }
 }

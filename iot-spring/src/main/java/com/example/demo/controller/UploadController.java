@@ -16,6 +16,7 @@ public class UploadController {
     }
 
     @PostMapping("/upload")
+    @PreAuthorize("hasRole('TENANT', 'ADMIN')")
     public UploadResponse upload(@RequestParam("file") MultipartFile file) {
         String url = imageService.saveImage(file);
         return new UploadResponse("http://192.168.100.109:8080" + url);

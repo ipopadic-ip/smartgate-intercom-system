@@ -56,8 +56,8 @@ public abstract class BaseService<T, DTO, ID> {
             idField.setAccessible(true);
             Object id = idField.get(dto);
 
-            if (id != null) {
-                Optional<T> optionalEntity = getRepository().findById((ID) id);
+            if (id != null && !id.equals(0) && !id.equals(0L)) {
+            	Optional<T> optionalEntity = getRepository().findById((ID) id);
                 if (optionalEntity.isPresent()) {
                     T existingEntity = optionalEntity.get();
                     updateEntityFromDto(dto, existingEntity);
@@ -67,6 +67,11 @@ public abstract class BaseService<T, DTO, ID> {
 
             T newEntity = convertToEntity(dto);
             setActive(newEntity, true);
+            if (newEntity == null) {
+                throw new IllegalStateException(
+                    "convertToEntity returned null for " + dto.getClass().getSimpleName()
+                );
+            }
             return convertToDTO(getRepository().save(newEntity));
         } catch (Exception e) {
             throw new RuntimeException("Error in save operation: " + e.getMessage(), e);

@@ -2,12 +2,9 @@ package server.dto;
 
 import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import server.model.UserRole;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,5 +19,7 @@ public class RoleDTO {
 	
 
     private Boolean active = true;
+    
+    
 
 }

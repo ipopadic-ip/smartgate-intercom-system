@@ -5,9 +5,9 @@ import java.util.Map;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -25,27 +25,29 @@ import server.utils.TokenUtils;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         Map<String, PasswordEncoder> encoders = new HashMap<>();
         encoders.put("bcrypt", new BCryptPasswordEncoder());
-
+       
         DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder("bcrypt", encoders);
         passwordEncoder.setDefaultPasswordEncoderForMatches(encoders.get("bcrypt"));
         return passwordEncoder;
     }
-    
     @Bean
     public AuthenticationManager getAuthenticationManager(AuthenticationConfiguration conf) throws Exception {
-        return conf.getAuthenticationManager();
+    
+    	return conf.getAuthenticationManager();
     }
 
     @Bean
     public AuthenticationFilterBean getAuthenticationFilterBean(
             UserDetailsService userDetailsService,
             TokenUtils tokenUtils) {
+
 
         AuthenticationFilterBean filter = new AuthenticationFilterBean();
 
@@ -69,17 +71,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationFilterBean filter) throws Exception {
-        http
-            .cors(cors -> {})
-            .csrf(csrf -> csrf.disable()) 
-            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(authz -> authz
-
-                .anyRequest().permitAll()
-            )
-
-            .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
-
+    	http
+        .cors(cors -> {})
+        .csrf(csrf -> csrf.disable())
+        .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests(authz -> authz
+            .requestMatchers("/api/auth/**").permitAll()
+            
+            .anyRequest().authenticated()
+        )
+        .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
     

@@ -41,11 +41,12 @@ public class LoginRateLimitFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
                                     throws ServletException, IOException {
 
+    	
+    	
         String path = request.getRequestURI();
+        if (request.getRequestURI().startsWith("/api/auth/login")) {
 
-        if ("/api/auth/login".equals(path)) {
-
-            String ip = request.getRemoteAddr();
+        	String ip = request.getRemoteAddr();
             Bucket bucket = resolveBucket(ip);
 
             if (bucket.tryConsume(1)) {

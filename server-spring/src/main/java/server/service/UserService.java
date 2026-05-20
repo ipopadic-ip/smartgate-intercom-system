@@ -18,9 +18,11 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import server.dto.UserDTO;
 import server.dto.UserRoleDTO;
+import server.model.Apartment;
 import server.model.Role;
 import server.model.User;
 import server.model.UserRole;
+import server.repository.ApartmentRepository;
 import server.repository.RoleRepository;
 import server.repository.UserRepository;
 import server.repository.UserRoleRepository;
@@ -40,6 +42,9 @@ public class UserService extends BaseService<User, UserDTO, Long>{
 	
 	@Autowired
 	private UserRoleRepository userRoleRepository;
+	
+	@Autowired
+	private ApartmentRepository apartmentRepository;
 	
 	
 	@Autowired
@@ -183,6 +188,15 @@ public class UserService extends BaseService<User, UserDTO, Long>{
 
 	    UserRole saved = userRoleRepository.save(userRole);
 	    return userRoleService.convertToDTO(saved);
+	}
+	
+	public void assignApartment(Long userId, Long apartmentId) {
+	    User u = userRepository.findById(userId).orElseThrow();
+	    Apartment a = apartmentRepository.findById(apartmentId).orElseThrow();
+
+	    u.setApartment(a);
+
+	    userRepository.save(u);
 	}
 
 	

@@ -1,5 +1,7 @@
 package server.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.BatchSize;
@@ -13,9 +15,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,7 +40,7 @@ public class User {
     private Long id;
 
     
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
@@ -50,6 +53,14 @@ public class User {
 
     @Column(nullable = false)
     private Boolean active = true;
+    
+    @OneToMany(mappedBy = "user")
+    private List<ActionLog> actions = new ArrayList<>();
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "apartment_id")
+    private Apartment apartment;
+    
     
     
 }

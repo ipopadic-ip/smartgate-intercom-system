@@ -1,6 +1,8 @@
 package server.controller;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,24 +11,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.security.PermitAll;
-import server.dto.UserRoleDTO;
-import server.dto.UserDTO;
+import server.dto.AuthResponse;
 import server.dto.RoleDTO;
+import server.dto.UserDTO;
 import server.dto.UserLoginDTO;
-
+import server.dto.UserRoleDTO;
 import server.model.User;
-
-import server.service.UserService;
 import server.service.RoleService;
+import server.service.UserService;
 import server.utils.TokenUtils;
 
-@Controller
+@RestController
 @RequestMapping("/api/auth")
 @PermitAll
 public class AuthController {
@@ -51,27 +52,35 @@ public class AuthController {
 	private PasswordEncoder passwordEncoder;
 	
 	@PostMapping("login")
-    public ResponseEntity<String> login(@RequestBody UserLoginDTO user) {
+	public ResponseEntity<AuthResponse> login(@RequestBody UserLoginDTO user) {
+
+	    User u = userService.findByUsername(user.getUsername());
+	    if (u == null) {
+	        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+	    }
 
 
-        User u = userService.findByUsername(user.getUsername());
+	    boolean passwordMatches =
+	            passwordEncoder.matches(user.getPassword(), u.getPassword());
 
-        if (u == null) {
-            System.out.println("User not found.");
-            return new ResponseEntity<>("User not found.", HttpStatus.UNAUTHORIZED);
-        }
+	    if (passwordMatches) {
 
+	        UserDetails userDetails =
+	                userDetailsService.loadUserByUsername(user.getUsername());
 
-        boolean passwordMatches = passwordEncoder.matches(user.getPassword(), u.getPassword());
+	        Map<String, Object> claims = new HashMap<>();
 
-        if (passwordMatches) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-            String token = tokenUtils.generateToken(userDetails);
-            return ResponseEntity.ok(token);
-        }
+	        if(u.getApartment() != null) {
+		        claims.put("stan", u.getApartment().getDoorNumber());
+	        }
+	        String token = tokenUtils.generateToken(userDetails, claims);
+	        //return ResponseEntity.ok(new AuthResponse("TEST123"));
 
-        return new ResponseEntity<>("Wrong password", HttpStatus.UNAUTHORIZED);
-    }
+	        return ResponseEntity.ok(new AuthResponse(token));
+	    }
+
+	    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+	}
 	
 	
     @PostMapping("/register-admin")
