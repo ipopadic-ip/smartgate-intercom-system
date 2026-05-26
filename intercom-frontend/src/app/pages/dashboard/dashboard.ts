@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { IntercomService } from '../../services/intercom';
 import { IntercomEvent } from '../../models/intercom-event';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +23,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private intercomService: IntercomService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -60,5 +62,31 @@ export class DashboardComponent implements OnInit {
 
   rejectVisitor(): void {
     this.message = 'Pristup odbijen.';
+  }
+
+  goToChangePassword(): void {
+    this.router.navigate(['/login'], {
+      queryParams: { update: true }
+    });
+  }
+
+  goToAdmin(): void {
+    this.router.navigate(['/admin']);
+  }
+
+  isAdmin(): boolean {
+    const token = localStorage.getItem('access_token');
+    if (!token) return false;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+
+      const roles = payload?.authorities || [];
+
+      return roles.some((r: any) => r.authority === 'ROLE_ADMIN');
+
+    } catch {
+      return false;
+    }
   }
 }

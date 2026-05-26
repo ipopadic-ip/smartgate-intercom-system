@@ -5,16 +5,24 @@
 
     <input
       type="text"
+      name="username"
       placeholder="Korisničko ime"
-      [(ngModel)]="username"
+      [(ngModel)]="user.username"
     />
 
     <input
       type="password"
+      name="password"
       placeholder="Lozinka"
-      [(ngModel)]="password"
+      [(ngModel)]="user.password"
     />
 
-    <button (click)="login()">Uloguj se</button>
+    @if (update) {
+      <button (click)="updateUser()">Promeni sifru</button>
+
+    } @else{
+      <button (click)="login()">Uloguj se</button>
+
+    }
   </div>
 </div>
