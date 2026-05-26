@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import server.dto.ApartmentDTO;
 import server.dto.UserDTO;
 import server.dto.UserRoleDTO;
 import server.model.Apartment;
@@ -63,21 +64,38 @@ public class UserService extends BaseService<User, UserDTO, Long>{
               .collect(Collectors.toList());
   }
  
+  @Transactional 
+  public UserDTO findUserById(Long id) {
+      return convertToDTO(userRepository.findById(id).orElse(null));
+  }
   
   @Override
   public UserDTO convertToDTO(User entity) {
+	  if (entity == null) {
+		  return null;
+	  }
       Set<UserRoleDTO> rolesDTO = new HashSet<>();
       if (entity.getUserRole() != null) {
           for (UserRole role : entity.getUserRole()) {
               rolesDTO.add(userRoleService.convertToDTO(role));
           }
       }
+      
+      ApartmentDTO apartmentDTO = new ApartmentDTO();
+      if (entity.getApartment() != null) {
+		  apartmentDTO.setId(entity.getApartment().getId());
+		  apartmentDTO.setDoorNumber(entity.getApartment().getDoorNumber());
+		  apartmentDTO.setActive(true);
+		  apartmentDTO.setUsers(null);
+		  
+	  }
 
       return new UserDTO(
           entity.getId(),
           entity.getUsername(),
           null, 
           rolesDTO,
+          apartmentDTO,
           entity.getActive()
       );
   }
@@ -98,6 +116,13 @@ public class UserService extends BaseService<User, UserDTO, Long>{
               roles.add(ur);
           }
       }
+      if (dto.getApartment() != null && dto.getApartment().getId() != null) {
+    	    Apartment apartment = apartmentRepository
+    	        .findById(dto.getApartment().getId())
+    	        .orElseThrow();
+
+    	    user.setApartment(apartment);
+    	}
 
       user.setUserRole(roles);
       user.setActive(dto.getActive());

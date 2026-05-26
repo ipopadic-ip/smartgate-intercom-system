@@ -77,7 +77,10 @@ public class SecurityConfig {
         .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(authz -> authz
             .requestMatchers("/api/auth/**").permitAll()
-            
+            .requestMatchers("/api/upload").permitAll()
+            .requestMatchers("/ws-intercom").permitAll()
+            .requestMatchers("/ws-intercom/**").permitAll()
+            .requestMatchers("/images/**").permitAll()
             .anyRequest().authenticated()
         )
         .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);

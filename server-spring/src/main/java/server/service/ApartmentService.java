@@ -18,6 +18,11 @@ public class ApartmentService extends BaseService<Apartment, ApartmentDTO, Long>
 	    protected CrudRepository<Apartment, Long> getRepository() {
 	        return apartmentRepository;
 	    }
+	    
+	    public ApartmentDTO findApartmentById(Long id) {
+	        Apartment entity = getRepository().findById(id).orElse(null);
+	        return convertToDTO(entity);
+	    }
 
 	    @Override
 	    protected ApartmentDTO convertToDTO(Apartment entity) {

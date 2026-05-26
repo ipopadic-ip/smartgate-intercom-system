@@ -55,10 +55,13 @@ public class AuthController {
 	public ResponseEntity<AuthResponse> login(@RequestBody UserLoginDTO user) {
 
 	    User u = userService.findByUsername(user.getUsername());
+
 	    if (u == null) {
 	        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	    }
-
+	    if (!u.isActive()) {
+	        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+	    }
 
 	    boolean passwordMatches =
 	            passwordEncoder.matches(user.getPassword(), u.getPassword());
@@ -68,13 +71,19 @@ public class AuthController {
 	        UserDetails userDetails =
 	                userDetailsService.loadUserByUsername(user.getUsername());
 
-	        Map<String, Object> claims = new HashMap<>();
+	        String token;
 
-	        if(u.getApartment() != null) {
-		        claims.put("stan", u.getApartment().getDoorNumber());
+	        if (u.getApartment() != null) {
+
+	            Map<String, Object> claims = new HashMap<>();
+	            claims.put("stan", u.getApartment().getDoorNumber());
+	            claims.put("id", u.getId());
+	            token = tokenUtils.generateToken(userDetails, claims);
+
+	        } else {
+
+	            token = tokenUtils.generateToken(userDetails, new HashMap<>());
 	        }
-	        String token = tokenUtils.generateToken(userDetails, claims);
-	        //return ResponseEntity.ok(new AuthResponse("TEST123"));
 
 	        return ResponseEntity.ok(new AuthResponse(token));
 	    }

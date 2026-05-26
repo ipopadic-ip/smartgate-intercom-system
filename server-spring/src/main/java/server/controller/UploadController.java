@@ -22,7 +22,6 @@ public class UploadController {
     @PostMapping("/upload")
     public UploadResponse upload(@RequestParam("file") MultipartFile file) {
 
-        System.out.println("UPLOAD HIT");
 
         try {
             String url = imageService.saveImage(file);

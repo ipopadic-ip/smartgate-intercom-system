@@ -27,6 +27,28 @@ public class ActionLog {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+    
+    @Column(nullable = false)
+    private int doorNumber;
+    
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private Boolean active = true;
+    
+
+	public ActionLog() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ActionLog(Long id, String action, LocalDateTime timestamp, User user, int doorNumber, Boolean active) {
+		super();
+		this.id = id;
+		this.action = action;
+		this.timestamp = timestamp;
+		this.user = user;
+		this.doorNumber = doorNumber;
+		this.active = active;
+	}
 
 	public Long getId() {
 		return id;
@@ -58,6 +80,14 @@ public class ActionLog {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public int getDoorNumber() {
+		return doorNumber;
+	}
+
+	public void setDoorNumber(int doorNumber) {
+		this.doorNumber = doorNumber;
 	}
     
 }
