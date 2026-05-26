@@ -1,0 +1,19 @@
+<mat-card>
+    <mat-card-title>Korisnici</mat-card-title>
+
+    @for (user of users; track $index) {
+        <div class="user-row">
+            <mat-label>{{user.username}}</mat-label>
+
+            @if (user.active == true) {
+                <button mat-flat-button class="deactivate_button" (click)="deactivateUser(user.id)">Deaktiviraj nalog</button>
+
+            } @else {
+                <button mat-flat-button class="activate_button" (click)="activateUser(user.id)">Aktiviraj nalog</button>
+
+            }
+        </div>
+
+        <mat-divider></mat-divider>
+    }
+</mat-card>

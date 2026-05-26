@@ -1,20 +1,38 @@
 <div class="dashboard-page">
-  <div class="dashboard-card">
-    <h1>SmartGate Intercom</h1>
-    <p class="subtitle">Dolazni poziv sa interfona</p>
 
-    <img [src]="visitorImageUrl" alt="Slika posetioca" class="visitor-image" />
+  <div class="dashboard-container">
 
-    <div class="info-box">
-      <p><strong>Stan:</strong> {{ stan }}</p>
-      <p><strong>Vreme poziva:</strong> {{ timestamp | date:'dd.MM.yyyy HH:mm:ss' }}</p>
+    <div class="top-actions">
+      <button class="top-btn" (click)="goToChangePassword()">
+        Promena šifre
+      </button>
+
+      @if (isAdmin()) {
+        <button class="top-btn admin-btn" (click)="goToAdmin()">
+          Admin panel
+        </button>
+      }
     </div>
 
-    <div class="actions">
-      <button class="open-btn" (click)="openDoor()">Otvori</button>
-      <button class="reject-btn" (click)="rejectVisitor()">Ne otvaraj</button>
+    <div class="dashboard-card">
+      <h1>SmartGate Intercom</h1>
+      <p class="subtitle">Dolazni poziv sa interfona</p>
+
+      <img [src]="visitorImageUrl" class="visitor-image" />
+
+      <div class="info-box">
+        <p><strong>Stan:</strong> {{ stan }}</p>
+        <p><strong>Vreme:</strong> {{ timestamp | date:'dd.MM.yyyy HH:mm:ss' }}</p>
+      </div>
+
+      <div class="actions">
+        <button class="open-btn" (click)="openDoor()">Otvori</button>
+        <button class="reject-btn" (click)="rejectVisitor()">Ne otvaraj</button>
+      </div>
+
+      <p class="message" *ngIf="message">{{ message }}</p>
     </div>
 
-    <p class="message" *ngIf="message">{{ message }}</p>
   </div>
+
 </div>

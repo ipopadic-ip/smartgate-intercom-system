@@ -1,0 +1,73 @@
+<mat-card>   
+  <mat-card-title>Dogadjaji</mat-card-title>
+    <table mat-table [dataSource]="logs" class="mat-elevation-z8">
+
+      @for (column of displayedColumns; track column) {
+
+
+        @if (column === 'action') {
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>
+              Akcija
+            </th>
+
+            <td mat-cell *matCellDef="let element">
+              {{ element.action }}
+            </td>
+          </ng-container>
+        }
+
+        @if (column === 'timestamp') {
+          <ng-container matColumnDef="timestamp">
+            <th mat-header-cell *matHeaderCellDef>
+              Vreme
+            </th>
+
+            <td mat-cell *matCellDef="let element">
+              {{ element.timestamp | date:'short' }}
+            </td>
+          </ng-container>
+        }
+
+        @if (column === 'doorNumber') {
+          <ng-container matColumnDef="doorNumber">
+            <th mat-header-cell *matHeaderCellDef>
+              Broj stana
+            </th>
+
+            <td mat-cell *matCellDef="let element">
+              {{ element.doorNumber }}
+            </td>
+          </ng-container>
+        }
+
+        @if (column === 'user') {
+          <ng-container matColumnDef="user">
+            <th mat-header-cell *matHeaderCellDef>
+              Korisnik
+            </th>
+
+            <td mat-cell *matCellDef="let element">
+              {{ element.user?.username }}
+            </td>
+          </ng-container>
+        }
+
+      }
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+</mat-card>
+
+<div class="users-section">
+
+  <app-user-form     (userCreated)="refreshUsers()">
+></app-user-form>
+
+  <app-user-list-component></app-user-list-component>
+
+</div>
