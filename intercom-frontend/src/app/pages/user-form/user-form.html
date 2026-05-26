@@ -1,0 +1,53 @@
+<mat-card>
+  <mat-card-title>Dodaj korisnika</mat-card-title>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <!-- Username -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username">
+    </mat-form-field>
+
+    <!-- Password -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password">
+    </mat-form-field>
+
+    <!-- Apartments -->
+
+        
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Stan</mat-label>
+
+      <div formGroupName="apartment">
+
+        <mat-select formControlName="id">
+
+          @if (apartments.length === 0) {
+            <mat-option disabled>
+              Nema dostupnih stanova
+            </mat-option>
+          } @else {
+            @for (a of apartments; track a.id) {
+              <mat-option [value]="a.id">
+                Stan {{ a.doorNumber }}
+              </mat-option>
+            }
+          }
+
+        </mat-select>
+
+      </div>
+
+    </mat-form-field>
+
+  
+
+    <!-- Submit -->
+    <button mat-raised-button color="primary" type="submit">
+      Sačuvaj
+    </button>
+
+  </form>
+</mat-card>

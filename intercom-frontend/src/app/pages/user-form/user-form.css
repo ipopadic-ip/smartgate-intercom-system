@@ -1,0 +1,33 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    background-color: #ffffff;
+    max-width: 100%;
+}
+
+mat-form-field {
+    background-color: #ffffff;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+button[type="submit"] {
+    align-self: flex-start;
+
+}
+
+mat-card {
+    background-color: #5288fc;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+mat-card-title {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 20px;
+}

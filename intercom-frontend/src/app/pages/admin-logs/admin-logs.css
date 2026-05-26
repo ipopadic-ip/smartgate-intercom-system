@@ -1,0 +1,39 @@
+mat-card {
+  background-color: #5288fc;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px;
+}
+mat-card-title {
+  color: white;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+}
+
+td, th{
+  text-align: center;
+}
+
+
+.users-section {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin: 20px;
+}
+
+app-user-form {
+  flex: 0 0 40%;
+  display: block;
+}
+
+app-user-list-component {
+  flex: 1;
+  display: block;
+  min-width: 0;
+}
+
