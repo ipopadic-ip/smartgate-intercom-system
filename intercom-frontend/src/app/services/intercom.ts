@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { IntercomEvent } from '../models/intercom-event';
 import { Client } from '@stomp/stompjs';
 import { Subject } from 'rxjs';
+import { AuthService } from './auth-service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class IntercomService {
   private stompClient?: Client;
   private connected = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   connectWebSocket() {
     if (this.connected) return;
@@ -35,7 +36,8 @@ export class IntercomService {
     this.stompClient.onConnect = () => {
        console.log('STOMP povezan!');
       this.connected = true;
-      this.stompClient?.subscribe('/topic/intercom', (message) => {
+      const stan = this.authService.getStan(); // ili iz tokena
+      this.stompClient?.subscribe(`/topic/intercom/${stan}`, (message) => {
         console.log('Raw body:', message.body); 
         const event: IntercomEvent = JSON.parse(message.body);
         console.log('Parsed event:', event);
