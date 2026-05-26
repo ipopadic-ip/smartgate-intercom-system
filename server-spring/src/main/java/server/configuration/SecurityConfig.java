@@ -81,6 +81,7 @@ public class SecurityConfig {
             .requestMatchers("/ws-intercom").permitAll()
             .requestMatchers("/ws-intercom/**").permitAll()
             .requestMatchers("/images/**").permitAll()
+
             .anyRequest().authenticated()
         )
         .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);

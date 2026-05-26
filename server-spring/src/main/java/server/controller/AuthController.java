@@ -63,6 +63,7 @@ public class AuthController {
 	        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	    }
 
+
 	    boolean passwordMatches =
 	            passwordEncoder.matches(user.getPassword(), u.getPassword());
 
@@ -84,6 +85,7 @@ public class AuthController {
 
 	            token = tokenUtils.generateToken(userDetails, new HashMap<>());
 	        }
+
 
 	        return ResponseEntity.ok(new AuthResponse(token));
 	    }
