@@ -18,7 +18,7 @@ public class Apartment {
     private Long id;
     
     @Column(nullable = false, unique = true)
-    private int doorNumber;
+    private Integer doorNumber;
     
     @OneToMany(mappedBy = "apartment")
     private List<User> users = new ArrayList<User>();
@@ -26,7 +26,15 @@ public class Apartment {
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE") 
     private Boolean active = true;
     
-    public Long getId() {
+    
+    
+    
+    public Apartment() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Long getId() {
 		return id;
 	}
 
@@ -34,11 +42,11 @@ public class Apartment {
 		this.id = id;
 	}
 
-	public int getDoorNumber() {
+	public Integer getDoorNumber() {
 		return doorNumber;
 	}
 
-	public void setDoorNumber(int doorNumber) {
+	public void setDoorNumber(Integer doorNumber) {
 		this.doorNumber = doorNumber;
 	}
 
@@ -57,6 +65,7 @@ public class Apartment {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
+
     
     
 }

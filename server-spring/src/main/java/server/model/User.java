@@ -60,6 +60,15 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "apartment_id")
     private Apartment apartment;
+
+	public boolean isActive() {
+
+		if (active == true) {
+			return active;
+		}
+		
+		return false;
+	}
     
     
     
