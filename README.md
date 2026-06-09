@@ -466,14 +466,13 @@ Servira sačuvanu sliku direktno iz `uploads/` direktorijuma.
 | Backend – WebSocket STOMP | ✅ Implementirano |
 | Frontend – login | ✅ Implementirano |
 | Frontend – dashboard + real-time | ✅ Implementirano |
-| Autentikacija (JWT/OAuth) | 🔄 Planirana |
+| Autentikacija (JWT/OAuth) | ✅ Implementirano |
 | Produkciona baza (PostgreSQL) | 🔄 Planirana |
 
 ---
 
 ## Buduća proširenja
 
-- **JWT autentikacija** – zaštita API endpointa i WebSocket konekcija
 - **PostgreSQL** – zamena MySQL in-memory baze za produkciju
 - **Istorija poseta** – pregled svih posetilaca po stanovima
 - **Cloud storage** – Amazon S3 ili slično za slike
