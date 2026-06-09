@@ -52,7 +52,7 @@ Sistem podržava više stanova (multi-apartment), radi u lokalnoj mreži i proje
 │  │  - Kamera    │ ─────────────── ▶│   MQTT Subscriber    │    │
 │  │  - GPIO/Relay│                  │   WebSocket Broker    │    │
 │  │  - MQTT Klijent◀─────────────── │   REST API           │    │
-│  └──────────────┘    MQTT Subscribe│   H2 / Image Store    │    │
+│  └──────────────┘    MQTT Subscribe│   MySQL / Image Store   │  │
 │                                    └──────────┬────────────┘    │
 │                                               │ WebSocket/STOMP │
 │                                    ┌──────────▼────────────┐    │
@@ -92,7 +92,7 @@ Sistem podržava više stanova (multi-apartment), radi u lokalnoj mreži i proje
 | MQTT integracija | Spring Integration MQTT + Eclipse Paho 1.2.5 |
 | WebSocket | Spring WebSocket + STOMP |
 | Persistencija | Spring Data JPA |
-| Baza podataka | H2 (in-memory, dev) |
+| Baza podataka |  (in-memory, dev) |
 | Serializacija | Jackson Databind |
 | Validacija | Spring Boot Validation |
 
@@ -202,7 +202,7 @@ src/main/java/com/example/demo/
 **Upload slike:**
 - `POST /api/upload` prima `multipart/form-data`
 - Fajl se čuva u `uploads/` sa UUID prefiksom
-- Metapodaci (ime, putanja, vreme) se upisuju u H2 bazu
+- Metapodaci (ime, putanja, vreme) se upisuju u MySQL bazu
 - Vraća JSON `{ "url": "http://<ip>:8080/images/<filename>" }`
 
 **MQTT → WebSocket bridge:**
@@ -221,11 +221,9 @@ src/main/java/com/example/demo/
 server.port=8080
 server.address=0.0.0.0
 
-# H2 in-memory baza
-spring.datasource.url=jdbc:h2:mem:testdb
+# MySQL in-memory baza
+spring.datasource.url=
 spring.jpa.hibernate.ddl-auto=update
-spring.h2.console.enabled=true
-spring.h2.console.path=/h2-console
 
 # Upload
 file.upload-dir=uploads
@@ -305,7 +303,7 @@ export interface IntercomEvent {
 [UploadService – POST /api/upload → backend]
         │              │
         │              ▼
-        │       [ImageService – čuva na disk + H2 DB]
+        │       [ImageService – čuva na disk + MySQL DB]
         │              │
         │              ▼
         │       [Vraća image URL]
@@ -373,7 +371,7 @@ sudo systemctl start mosquitto
 cd backend/
 mvn spring-boot:run
 # Backend dostupan na http://0.0.0.0:8080
-# H2 konzola: http://localhost:8080/h2-console
+# MySQL konzola: http://localhost:8080/MySQL-console
 ```
 
 ### 3. IoT – Raspberry Pi
@@ -476,7 +474,7 @@ Servira sačuvanu sliku direktno iz `uploads/` direktorijuma.
 ## Buduća proširenja
 
 - **JWT autentikacija** – zaštita API endpointa i WebSocket konekcija
-- **PostgreSQL** – zamena H2 in-memory baze za produkciju
+- **PostgreSQL** – zamena MySQL in-memory baze za produkciju
 - **Istorija poseta** – pregled svih posetilaca po stanovima
 - **Cloud storage** – Amazon S3 ili slično za slike
 - **Face recognition** – AI prepoznavanje poznatih lica
