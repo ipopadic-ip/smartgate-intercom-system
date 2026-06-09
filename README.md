@@ -474,7 +474,6 @@ Servira sačuvanu sliku direktno iz `uploads/` direktorijuma.
 ## Buduća proširenja
 
 - **PostgreSQL** – zamena MySQL in-memory baze za produkciju
-- **Istorija poseta** – pregled svih posetilaca po stanovima
 - **Cloud storage** – Amazon S3 ili slično za slike
 - **Face recognition** – AI prepoznavanje poznatih lica
 - **Push notifikacije** – Firebase Cloud Messaging za mobilne uređaje
